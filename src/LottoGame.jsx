@@ -3,7 +3,7 @@ import LottoModal from "./LottoModal";
 
 function LottoGame() {
   return (
-    <div id="app" class="p-3">
+    <div id="app" className="p-3">
       <Lotto />
       <LottoModal />
     </div>
