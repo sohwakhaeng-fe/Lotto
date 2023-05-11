@@ -22,7 +22,7 @@ function App() {
         <div className="w-100">
           <h1 className="text-center">🎱 행운의 로또</h1>
           <PaymentForm generateTickets={generateTickets} />
-          <TicketInfoBox />
+          <TicketInfoBox tickets={tickets} />
           <WinningLottoForm />
         </div>
       </div>
