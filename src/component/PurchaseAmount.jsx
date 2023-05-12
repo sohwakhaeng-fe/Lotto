@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export default function PurchaseAmount(props) {
-  const { amount, onAmountChange } = props;
+  const { amount, onAmountChange, handleAmountUpdate } = props;
   const [curAmount, setCurAmount] = useState("");
 
   function handleChange(event) {
@@ -16,6 +16,7 @@ export default function PurchaseAmount(props) {
     }
     // 유저가 입력한 금액을 상위 컴포넌트의 amount값을 바꾸자
     onAmountChange(curAmount);
+    handleAmountUpdate(curAmount);
   };
 
   return (

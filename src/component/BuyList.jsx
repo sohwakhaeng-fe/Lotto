@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 export default function BuyList(props) {
-  const { amount } = props;
+  const { amount, setUserLootoNumberList } = props;
   const [showLottoNumbers, setShowLottoNumbers] = useState(false);
   const [lottoNumbersList, setLottoNumbersList] = useState([]);
 
@@ -12,6 +12,7 @@ export default function BuyList(props) {
       newLottoNumbersList.push(newLottoNumbers);
     }
     setLottoNumbersList(newLottoNumbersList);
+    setUserLootoNumberList(newLottoNumbersList);
   }, [amount]);
 
   function lottoNumberMaker() {

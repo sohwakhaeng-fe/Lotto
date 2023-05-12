@@ -1,10 +1,20 @@
 import React from "react";
 
-export default function LottoModal() {
+export default function LottoModal(props) {
+  const { showResult, setShowResult } = props;
+  const showModalStyle = {
+    visibility: showResult ? "visible" : "hidden",
+    opacity: "100",
+  };
+
+  function handleModalClose() {
+    setShowResult(!showResult);
+  }
+
   return (
-    <div className="modal">
+    <div className="modal" style={showModalStyle}>
       <div className="modal-inner p-10">
-        <div className="modal-close">
+        <div className="modal-close" onClick={handleModalClose}>
           <svg viewBox="0 0 40 40">
             <path className="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
           </svg>
