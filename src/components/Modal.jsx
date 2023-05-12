@@ -4,7 +4,8 @@ const Modal = ({
   LottoTicketList,
   lastWinningNumber,
   setIsModalOpen,
-  setLottoTicketList,
+  handleReset,
+  isModalOpen,
 }) => {
   const [ranks, setRanks] = useState([]);
   const [rankCounts, setRankCounts] = useState({});
@@ -47,8 +48,6 @@ const Modal = ({
   const calculateProfitRate = (rankCounts) => {
     const ticketPrice = 1000;
     const purchaseAmount = LottoTicketList.length * ticketPrice;
-    //총번금액 - 로또구매금액 / 로또구매금액 *100
-    console.log(rankCounts);
     let totalPrize = 0;
     totalPrize += rankCounts[1] * 2000000000; // 1등 당첨금
     totalPrize += rankCounts[2] * 30000000; // 2등 당첨금
@@ -61,9 +60,6 @@ const Modal = ({
     return profitRate;
   };
 
-  const handleReset = () => {
-    setLottoTicketList([]);
-  };
   useEffect(() => {
     setRanks(calculateRanks());
   }, [LottoTicketList, lastWinningNumber]);
@@ -76,10 +72,9 @@ const Modal = ({
     setProfitRate(calculateProfitRate(rankCounts));
   }, [rankCounts]);
 
-  console.log("profitRate", profitRate);
   return (
     <>
-      <div className="modal-open">
+      <div className={isModalOpen ? "modal open" : "modal"}>
         <div className="modal-inner p-10">
           <div className="modal-close" onClick={() => setIsModalOpen(false)}>
             <svg viewBox="0 0 40 40">
@@ -130,7 +125,11 @@ const Modal = ({
             당신의 총 수익률은 {profitRate}%입니다.
           </p>
           <div className="d-flex justify-center mt-5">
-            <button type="button" className="btn btn-cyan" onClick={handleReset}>
+            <button
+              type="button"
+              className="btn btn-cyan"
+              onClick={handleReset}
+            >
               다시 시작하기
             </button>
           </div>

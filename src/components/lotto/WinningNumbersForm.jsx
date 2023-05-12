@@ -1,19 +1,22 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Input from "../Input";
 import Button from "../Button";
 import Modal from "../Modal";
 
-const WinningNumbersForm = ({ LottoTicketList , setLottoTicketList}) => {
+const WinningNumbersForm = ({ LottoTicketList, setLottoTicketList }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [lastWinningNumber, setLastWinningNumber] = useState({
-    winningNums: Array(6).fill(null),
-    bonusNum: 0,
+    winningNums: Array(6).fill(""),
+    bonusNum: "",
   });
 
-  const isDataComplete =
-    lastWinningNumber.winningNums.every((num) => num !== null) &&
-    lastWinningNumber.bonusNum !== 0;
+  const isDataComplete = () => {
+    return (
+      lastWinningNumber.winningNums.every((num) => num !== "") &&
+      lastWinningNumber.bonusNum !== ""
+    );
+  };
 
   const handleChange = (e, index) => {
     const value = parseInt(e.target.value, 10);
@@ -42,7 +45,20 @@ const WinningNumbersForm = ({ LottoTicketList , setLottoTicketList}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsModalOpen(true);
+    if (isDataComplete()) {
+      setIsModalOpen(true);
+    } else {
+      alert("모든 입력 값을 입력해주세요!");
+    }
+  };
+
+  const handleReset = () => {
+    setLastWinningNumber({
+      winningNums: Array(6).fill(""),
+      bonusNum: "",
+    });
+    setLottoTicketList([]);
+    setIsModalOpen(false);
   };
 
   return (
@@ -58,7 +74,7 @@ const WinningNumbersForm = ({ LottoTicketList , setLottoTicketList}) => {
               return (
                 <Input
                   key={index}
-                  value={number}
+                  inputValue={number}
                   handleChange={(e) => handleChange(e, index)}
                 />
               );
@@ -69,7 +85,7 @@ const WinningNumbersForm = ({ LottoTicketList , setLottoTicketList}) => {
           <h4 className="mt-0 mb-3 text-center">보너스 번호</h4>
           <div className="d-flex justify-center">
             <Input
-              value={lastWinningNumber.bonusNum}
+              inputValue={lastWinningNumber.bonusNum}
               handleChange={(e) => handleChange(e, 6)}
             />
           </div>
@@ -79,12 +95,15 @@ const WinningNumbersForm = ({ LottoTicketList , setLottoTicketList}) => {
       <Button type="submit" className={"open-result-modal-button mt-5 w-100"}>
         결과 확인하기
       </Button>
-      {isModalOpen && isDataComplete && (
+      {isModalOpen && (
         <Modal
+          isModalOpen={isModalOpen}
           lastWinningNumber={lastWinningNumber}
           LottoTicketList={LottoTicketList}
           setIsModalOpen={setIsModalOpen}
           setLottoTicketList={setLottoTicketList}
+          setLastWinningNumber={setLastWinningNumber}
+          handleReset={handleReset}
         />
       )}
     </form>

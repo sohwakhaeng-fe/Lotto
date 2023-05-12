@@ -1,6 +1,8 @@
 import React from "react";
 
 const Input = ({ priceInput, handleChange, inputValue }) => {
+  // const value = inputValue !== null ? inputValue : ""; // 빈 문자열로 초기화
+
   return priceInput ? (
     <input
       id="price"

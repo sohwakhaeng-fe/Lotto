@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 
-const LottoTicket = ({ lottoTicketNumbers, LottoTicketList }) => {
+const LottoTicket = ({ LottoTicketList }) => {
   const [showNumber, setShowNumber] = useState(false);
   const lottoTicketNumbersArray = Array.from(
-    { length: lottoTicketNumbers },
+    { length: LottoTicketList.length },
     (_, i) => i + 1
   );
   const handleToggle = () => {
     setShowNumber((prevShowNumber) => !prevShowNumber);
   };
-  // console.log("LottoTicketList", LottoTicketList);
   return (
     <section className="mt-9">
       <div className="d-flex">
         <label className="flex-auto my-0">
-          총 {lottoTicketNumbers}개를 구매하였습니다.
+          총 {LottoTicketList.length}개를 구매하였습니다.
         </label>
         <div className="flex-auto d-flex justify-end pr-1">
           <label className="switch">
