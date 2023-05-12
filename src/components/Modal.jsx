@@ -5,7 +5,7 @@ const Modal = ({
   lastWinningNumber,
   handleReset,
   isModalOpen,
-  handleOpenModal,
+  handleToggleModal,
 }) => {
   const [ranks, setRanks] = useState([]);
   const [rankCounts, setRankCounts] = useState({});
@@ -76,7 +76,7 @@ const Modal = ({
     <>
       <div className={isModalOpen ? "modal open" : "modal"}>
         <div className="modal-inner p-10">
-          <div className="modal-close" onClick={() => handleOpenModal(false)}>
+          <div className="modal-close" onClick={() => handleToggleModal(false)}>
             <svg viewBox="0 0 40 40">
               <path className="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>

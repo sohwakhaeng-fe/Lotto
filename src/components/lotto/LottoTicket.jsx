@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 
-const LottoTicket = ({ LottoTicketList }) => {
-  const [showNumber, setShowNumber] = useState(false);
+const LottoTicket = ({ LottoTicketList, showNumber, handleToggleNumber }) => {
   const lottoTicketNumbersArray = Array.from(
     { length: LottoTicketList.length },
     (_, i) => i + 1
   );
-  const handleToggle = () => {
-    setShowNumber((prevShowNumber) => !prevShowNumber);
-  };
+
   return (
     <section className="mt-9">
       <div className="d-flex">
@@ -20,7 +17,8 @@ const LottoTicket = ({ LottoTicketList }) => {
             <input
               type="checkbox"
               className="lotto-numbers-toggle-button"
-              onChange={handleToggle}
+              onChange={handleToggleNumber}
+              checked={showNumber}
             />
             <span className="text-base font-normal">번호보기</span>
           </label>

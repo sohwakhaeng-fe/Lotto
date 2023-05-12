@@ -5,15 +5,12 @@ import Modal from "../Modal";
 
 const WinningNumbersForm = ({
   LottoTicketList,
-  handleLottoTicketListReset,
+  lastWinningNumber,
+  handleChange,
+  handleReset,
+  isModalOpen,
+  handleToggleModal,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [lastWinningNumber, setLastWinningNumber] = useState({
-    winningNums: Array(6).fill(""),
-    bonusNum: "",
-  });
-
   const isDataComplete = () => {
     return (
       lastWinningNumber.winningNums.every((num) => num !== "") &&
@@ -21,52 +18,15 @@ const WinningNumbersForm = ({
     );
   };
 
-  const handleChange = (e, index) => {
-    const value = parseInt(e.target.value, 10);
-
-    if (value < 1 || value > 45) {
-      alert("1~45 사이의 숫자를 입력해주세요!");
-      return;
-    }
-
-    setLastWinningNumber((prevState) => {
-      let updatedWinningNum = [...prevState.winningNums];
-      let updatedBonusNum = prevState.bonusNum;
-
-      if (index === 6) {
-        updatedBonusNum = value;
-      } else {
-        updatedWinningNum[index] = value;
-      }
-      return {
-        ...prevState,
-        winningNums: updatedWinningNum,
-        bonusNum: updatedBonusNum,
-      };
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isDataComplete()) {
-      setIsModalOpen(true);
+      handleToggleModal(true);
     } else {
       alert("모든 입력 값을 입력해주세요!");
     }
   };
 
-  const handleReset = () => {
-    setLastWinningNumber({
-      winningNums: Array(6).fill(""),
-      bonusNum: "",
-    });
-    handleLottoTicketListReset([]);
-    setIsModalOpen(false);
-  };
-
-  const handleOpenModal = (newModalState) => {
-    setIsModalOpen(newModalState);
-  };
   return (
     <form className="mt-9" onSubmit={handleSubmit}>
       <label className="flex-auto d-inline-block mb-3">
@@ -106,7 +66,7 @@ const WinningNumbersForm = ({
           isModalOpen={isModalOpen}
           lastWinningNumber={lastWinningNumber}
           LottoTicketList={LottoTicketList}
-          handleOpenModal={handleOpenModal}
+          handleToggleModal={handleToggleModal}
           handleReset={handleReset}
         />
       )}

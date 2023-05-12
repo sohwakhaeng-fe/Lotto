@@ -1,7 +1,6 @@
 import React from "react";
 
 const Input = ({ priceInput, handleChange, inputValue }) => {
-  // const value = inputValue !== null ? inputValue : ""; // 빈 문자열로 초기화
 
   return priceInput ? (
     <input
@@ -11,6 +10,8 @@ const Input = ({ priceInput, handleChange, inputValue }) => {
       placeholder="구입 금액"
       value={inputValue}
       onChange={handleChange}
+      min={1000}
+      max={100000}
     />
   ) : (
     <input
@@ -18,6 +19,8 @@ const Input = ({ priceInput, handleChange, inputValue }) => {
       className="winning-number mx-1 text-center"
       value={inputValue}
       onChange={handleChange}
+      min={1}
+      max={45}
     />
   );
 };
