@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../Input";
 import Button from "../Button";
+import Modal from "../Modal";
 
 const WinningNumbersForm = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <form className="mt-9">
       <label className="flex-auto d-inline-block mb-3">
@@ -28,9 +31,15 @@ const WinningNumbersForm = () => {
         </div>
       </div>
 
-      <Button className={"open-result-modal-button mt-5 w-100"}>
+      <Button
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        className={"open-result-modal-button mt-5 w-100"}
+      >
         결과 확인하기
       </Button>
+      {isModalOpen && <Modal />}
     </form>
   );
 };
