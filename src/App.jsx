@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LottoPurchase from "./components/lotto/LottoPurchase";
 import LottoTicket from "./components/lotto/LottoTicket";
 import WinningNumbersForm from "./components/lotto/WinningNumbersForm";
@@ -7,6 +7,12 @@ import "./index.css";
 function App() {
   const [purchasePrice, setPurchasePrice] = useState(0);
   const purchaseNumber = purchasePrice / 1000;
+
+  console.log(purchaseNumber);
+  const [LottoTicketList, setLottoTicketList] = useState(
+    Array.from({ length: purchaseNumber }, () => null)
+  );
+
   const handlePurchasePriceChange = (newPurchasePrice) => {
     setPurchasePrice(newPurchasePrice);
   };
@@ -23,10 +29,10 @@ function App() {
     return lottoNumbers.sort((a, b) => a - b);
   };
 
-  const LottoTicketList = Array.from({ length: purchaseNumber }, () =>
-    generateLottoNumber()
-  );
-
+  // useEffect(() => {
+  //   setLottoTicketList();
+  // }, []);
+  console.log("LottoTicketList", LottoTicketList);
   return (
     <div id="app" className="p-3">
       <div className="d-flex justify-center mt-5">
@@ -37,8 +43,9 @@ function App() {
             lottoTicketNumbers={purchaseNumber}
             LottoTicketList={LottoTicketList}
           />
-          <WinningNumbersForm 
-          LottoTicketList={LottoTicketList}
+          <WinningNumbersForm
+            LottoTicketList={LottoTicketList}
+            setLottoTicketList={setLottoTicketList}
           />
         </div>
       </div>

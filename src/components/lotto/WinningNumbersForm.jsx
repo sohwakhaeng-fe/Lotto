@@ -3,7 +3,7 @@ import Input from "../Input";
 import Button from "../Button";
 import Modal from "../Modal";
 
-const WinningNumbersForm = ({ LottoTicketList }) => {
+const WinningNumbersForm = ({ LottoTicketList , setLottoTicketList}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [lastWinningNumber, setLastWinningNumber] = useState({
@@ -83,6 +83,8 @@ const WinningNumbersForm = ({ LottoTicketList }) => {
         <Modal
           lastWinningNumber={lastWinningNumber}
           LottoTicketList={LottoTicketList}
+          setIsModalOpen={setIsModalOpen}
+          setLottoTicketList={setLottoTicketList}
         />
       )}
     </form>

@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 
-const Modal = ({ LottoTicketList, lastWinningNumber }) => {
+const Modal = ({
+  LottoTicketList,
+  lastWinningNumber,
+  setIsModalOpen,
+  setLottoTicketList,
+}) => {
   const [ranks, setRanks] = useState([]);
   const [rankCounts, setRankCounts] = useState({});
   const [profitRate, setProfitRate] = useState(0);
@@ -42,7 +47,8 @@ const Modal = ({ LottoTicketList, lastWinningNumber }) => {
   const calculateProfitRate = (rankCounts) => {
     const ticketPrice = 1000;
     const purchaseAmount = LottoTicketList.length * ticketPrice;
-
+    //총번금액 - 로또구매금액 / 로또구매금액 *100
+    console.log(rankCounts);
     let totalPrize = 0;
     totalPrize += rankCounts[1] * 2000000000; // 1등 당첨금
     totalPrize += rankCounts[2] * 30000000; // 2등 당첨금
@@ -50,26 +56,32 @@ const Modal = ({ LottoTicketList, lastWinningNumber }) => {
     totalPrize += rankCounts[4] * 50000; // 4등 당첨금
     totalPrize += rankCounts[5] * 5000; // 5등 당첨금
 
-    const profitRate = (totalPrize / purchaseAmount) * 100; // 수익률 계산
+    const profitRate = ((totalPrize - purchaseAmount) / purchaseAmount) * 100; // 수익률 계산
 
     return profitRate;
   };
 
+  const handleReset = () => {
+    setLottoTicketList([]);
+  };
   useEffect(() => {
     setRanks(calculateRanks());
   }, [LottoTicketList, lastWinningNumber]);
 
   useEffect(() => {
     setRankCounts(calculateRankCounts());
-    setProfitRate(calculateProfitRate(rankCounts));
   }, [ranks]);
+
+  useEffect(() => {
+    setProfitRate(calculateProfitRate(rankCounts));
+  }, [rankCounts]);
 
   console.log("profitRate", profitRate);
   return (
     <>
       <div className="modal-open">
         <div className="modal-inner p-10">
-          <div className="modal-close">
+          <div className="modal-close" onClick={() => setIsModalOpen(false)}>
             <svg viewBox="0 0 40 40">
               <path className="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>
@@ -114,9 +126,11 @@ const Modal = ({ LottoTicketList, lastWinningNumber }) => {
               </tbody>
             </table>
           </div>
-          <p className="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+          <p className="text-center font-bold">
+            당신의 총 수익률은 {profitRate}%입니다.
+          </p>
           <div className="d-flex justify-center mt-5">
-            <button type="button" className="btn btn-cyan">
+            <button type="button" className="btn btn-cyan" onClick={handleReset}>
               다시 시작하기
             </button>
           </div>

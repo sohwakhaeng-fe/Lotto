@@ -9,7 +9,7 @@ const LottoTicket = ({ lottoTicketNumbers, LottoTicketList }) => {
   const handleToggle = () => {
     setShowNumber((prevShowNumber) => !prevShowNumber);
   };
-
+  // console.log("LottoTicketList", LottoTicketList);
   return (
     <section className="mt-9">
       <div className="d-flex">
