@@ -25,7 +25,7 @@ const LottoPurchase = ({ onPurchasePriceChange }) => {
         구입할 금액을 입력해주세요.
       </label>
       <div className="d-flex">
-        <Input value={inputValue} priceInput handleChange={handleChange} />
+        <Input inputValue={inputValue} priceInput handleChange={handleChange} />
         <Button>확인</Button>
       </div>
     </form>

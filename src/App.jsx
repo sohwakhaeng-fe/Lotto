@@ -22,6 +22,7 @@ function App() {
     }
     return lottoNumbers.sort((a, b) => a - b);
   };
+
   const LottoTicketList = Array.from({ length: purchaseNumber }, () =>
     generateLottoNumber()
   );
@@ -36,7 +37,9 @@ function App() {
             lottoTicketNumbers={purchaseNumber}
             LottoTicketList={LottoTicketList}
           />
-          <WinningNumbersForm />
+          <WinningNumbersForm 
+          LottoTicketList={LottoTicketList}
+          />
         </div>
       </div>
     </div>
