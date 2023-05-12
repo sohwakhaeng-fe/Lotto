@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { isValidPayment } from "../../utils/validate";
+import { isValidPaymentUnit } from "../../utils/validate";
 
 type PaymentFormProps = {
   generateTickets: (count: number) => void;
@@ -8,20 +8,20 @@ type PaymentFormProps = {
 const PaymentForm = ({ generateTickets }: PaymentFormProps) => {
   const [payment, setPayment] = useState(0);
 
-  const paymentChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangePayment = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPayment(+e.target.value);
   };
 
-  const submitPaymentForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitPaymentForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!isValidPayment(payment)) return;
+    if (!isValidPaymentUnit(payment)) return;
 
     generateTickets(payment / 1000);
   };
 
   return (
-    <form className="mt-5" onSubmit={submitPaymentForm}>
+    <form className="mt-5" onSubmit={onSubmitPaymentForm}>
       <label className="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
       <div className="d-flex">
         <input
@@ -29,7 +29,7 @@ const PaymentForm = ({ generateTickets }: PaymentFormProps) => {
           className="w-100 mr-2 pl-2"
           placeholder="구입 금액"
           value={payment === 0 ? "" : payment}
-          onChange={paymentChangeHandler}
+          onChange={onChangePayment}
           required
           min={1000}
           max={100000}

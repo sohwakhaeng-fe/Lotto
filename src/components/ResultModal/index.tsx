@@ -1,15 +1,30 @@
 import React from "react";
+import { PRIZE } from "../../constants/initValue";
+import { WinningResultType } from "../../types";
+import { getEarningRate } from "../../utils/earning";
+import TableRow from "./BodyTableRow";
 
-const ResultModal = () => {
+type ResultModalProps = {
+  closeModal: () => void;
+  winningResult: [string, number][];
+  payment: number;
+  restart: () => void;
+};
+
+const ResultModal = ({
+  closeModal,
+  winningResult,
+  payment,
+  restart,
+}: ResultModalProps) => {
   return (
     <div className="modal">
       <div className="modal-inner p-10">
-        <div className="modal-close">
+        <div className="modal-close" onClick={closeModal}>
           <svg viewBox="0 0 40 40">
             <path className="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
           </svg>
         </div>
-
         <h2 className="text-center">🏆 당첨 통계 🏆</h2>
         <div className="d-flex justify-center">
           <table className="result-table border-collapse border border-black">
@@ -21,37 +36,26 @@ const ResultModal = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="text-center">
-                <td className="p-3">3개</td>
-                <td className="p-3">5,000</td>
-                <td className="p-3">n개</td>
-              </tr>
-              <tr className="text-center">
-                <td className="p-3">4개</td>
-                <td className="p-3">50,000</td>
-                <td className="p-3">n개</td>
-              </tr>
-              <tr className="text-center">
-                <td className="p-3">5개</td>
-                <td className="p-3">1,500,000</td>
-                <td className="p-3">n개</td>
-              </tr>
-              <tr className="text-center">
-                <td className="p-3">5개 + 보너스볼</td>
-                <td className="p-3">30,000,000</td>
-                <td className="p-3">n개</td>
-              </tr>
-              <tr className="text-center">
-                <td className="p-3">6개</td>
-                <td className="p-3">2,000,000,000</td>
-                <td className="p-3">n개</td>
-              </tr>
+              {winningResult.map(([_rank, ticketCount], i) => {
+                const rank = _rank as keyof WinningResultType;
+
+                return (
+                  <TableRow
+                    key={i}
+                    matchedNumCount={PRIZE[rank].title}
+                    prize={PRIZE[rank].prize}
+                    ticketCount={ticketCount}
+                  />
+                );
+              })}
             </tbody>
           </table>
         </div>
-        <p className="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+        <p className="text-center font-bold">
+          당신의 총 수익률은 {getEarningRate(winningResult, payment)}%입니다.
+        </p>
         <div className="d-flex justify-center mt-5">
-          <button type="button" className="btn btn-cyan">
+          <button type="button" className="btn btn-cyan" onClick={restart}>
             다시 시작하기
           </button>
         </div>

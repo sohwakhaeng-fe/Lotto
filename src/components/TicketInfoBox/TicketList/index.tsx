@@ -10,8 +10,8 @@ const TicketList = ({ tickets, isToggleOn }: TickListProps) => {
   return (
     <div className="d-flex flex-wrap">
       <ul className="ticket-list">
-        {tickets.map((ticket, idx) => (
-          <Ticket key={idx} ticket={ticket} isToggleOn={isToggleOn} />
+        {tickets.map((ticket, i) => (
+          <Ticket key={i} ticket={ticket} isToggleOn={isToggleOn} />
         ))}
       </ul>
     </div>
