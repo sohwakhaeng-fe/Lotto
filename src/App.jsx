@@ -125,10 +125,6 @@ function App() {
     setIsModal(false);
   }
 
-  const handleSubmit = () => {
-    
-  }
-
   return (
     <div id="app" className="p-3">
       <div className="d-flex justify-center mt-5">
