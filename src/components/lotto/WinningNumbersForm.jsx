@@ -3,7 +3,10 @@ import Input from "../Input";
 import Button from "../Button";
 import Modal from "../Modal";
 
-const WinningNumbersForm = ({ LottoTicketList, setLottoTicketList }) => {
+const WinningNumbersForm = ({
+  LottoTicketList,
+  handleLottoTicketListReset,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [lastWinningNumber, setLastWinningNumber] = useState({
@@ -57,10 +60,13 @@ const WinningNumbersForm = ({ LottoTicketList, setLottoTicketList }) => {
       winningNums: Array(6).fill(""),
       bonusNum: "",
     });
-    setLottoTicketList([]);
+    handleLottoTicketListReset([]);
     setIsModalOpen(false);
   };
 
+  const handleOpenModal = (newModalState) => {
+    setIsModalOpen(newModalState);
+  };
   return (
     <form className="mt-9" onSubmit={handleSubmit}>
       <label className="flex-auto d-inline-block mb-3">
@@ -100,9 +106,7 @@ const WinningNumbersForm = ({ LottoTicketList, setLottoTicketList }) => {
           isModalOpen={isModalOpen}
           lastWinningNumber={lastWinningNumber}
           LottoTicketList={LottoTicketList}
-          setIsModalOpen={setIsModalOpen}
-          setLottoTicketList={setLottoTicketList}
-          setLastWinningNumber={setLastWinningNumber}
+          handleOpenModal={handleOpenModal}
           handleReset={handleReset}
         />
       )}

@@ -7,13 +7,18 @@ import { generateLottoNumber } from "./utils/lotto";
 
 function App() {
   const [purchasePrice, setPurchasePrice] = useState(0);
-  const [LottoTicketList, setLottoTicketList] = useState([]);
+  const [lottoTicketList, setLottoTicketList] = useState([]);
   const handlePurchasePriceChange = (newPurchasePrice) => {
     setPurchasePrice(newPurchasePrice);
     const newPurchaseNumber = newPurchasePrice / 1000;
-    const newLottoTicketList = Array.from({ length: newPurchaseNumber }, () =>
-      generateLottoNumber()
+    const newLottoTicketList = Array.from(
+      { length: newPurchaseNumber },
+      generateLottoNumber
     );
+    setLottoTicketList(newLottoTicketList);
+  };
+
+  const handleLottoTicketListReset = (newLottoTicketList) => {
     setLottoTicketList(newLottoTicketList);
   };
 
@@ -23,10 +28,10 @@ function App() {
         <div className="w-100">
           <h1 className="text-center">🎱 행운의 로또</h1>
           <LottoPurchase onPurchasePriceChange={handlePurchasePriceChange} />
-          <LottoTicket LottoTicketList={LottoTicketList} />
+          <LottoTicket LottoTicketList={lottoTicketList} />
           <WinningNumbersForm
-            LottoTicketList={LottoTicketList}
-            setLottoTicketList={setLottoTicketList}
+            LottoTicketList={lottoTicketList}
+            handleLottoTicketListReset={handleLottoTicketListReset}
           />
         </div>
       </div>

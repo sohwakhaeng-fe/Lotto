@@ -10,7 +10,6 @@ const LottoPurchase = ({ onPurchasePriceChange }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submit");
     const newPurchasePrice = parseInt(inputValue);
     onPurchasePriceChange(newPurchasePrice);
     setInputValue("");
