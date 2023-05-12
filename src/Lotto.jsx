@@ -23,13 +23,33 @@ export default function Lotto(props) {
   function handleWinningNumbersUpdate(winningNumberList) {
     setWinningNumbers(winningNumberList);
     // 과연 업데이트를 할 필요가 있을까? 이 함수로 바로 당첨자를 판별하면 되지 않을까?
-    console.log("winningNumberList :>> ", winningNumberList);
-    console.log("userLottoNumberList :>> ", userLottoNumberList);
     judgeWinner(winningNumberList, userLottoNumberList);
   }
 
   // 판별함수
-  function judgeWinner(winningNumbers, userNumbers) {}
+  function judgeWinner(winningNumbers, userNumbers) {
+    const sortWinningNumberArr = winningNumbers.sort((a, b) => a - b);
+    const sortUserNumbers = [];
+    const winningStatistics = [];
+    // sorting userNumbers
+    for (let i = 0; i < userNumbers.length; i++) {
+      sortUserNumbers.push(userNumbers[i].sort((a, b) => a - b));
+    }
+
+    for (let i = 0; i < sortUserNumbers.length; i++) {
+      winningStatistics.push(sortWinningNumberArr.filter((x) => sortUserNumbers[i].includes(x)));
+    }
+
+    // console.log("sortUserNumbers :>> ", sortUserNumbers);
+    console.log(winningStatistics);
+
+    // match winnginArr, userNumbersArr: ([[arr], [arr], [arr]])이런식
+    // for (let i = 0; i < sortUserNumbers; i++) {
+    //   console.log(sortUserNumbers[i]);
+    // }
+
+    // console.log(sortUserNumbers);
+  }
 
   return (
     <div className="d-flex justify-center mt-5">
