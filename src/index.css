@@ -16,6 +16,7 @@ body {
 .winning-number {
   width: 30px;
   height: 36px;
+  
 }
 
 .bonus-number {
@@ -23,12 +24,19 @@ body {
   height: 36px;
 }
 
+.ticket{
+  display: flex;
+  align-items: center;
+}
+
 .number-box {
   width: 40px;
   height: 40px;
+  font-size: 16px;
+  font-weight: bold;
   text-align: center;
   background-color: lightgray;
   margin: 5px;
   padding: 5px;
-  border-radius: 15px;
+  border-radius: 50%;
 }
