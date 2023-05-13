@@ -38,9 +38,9 @@ function App() {
       
       while (i < 6) {
         const n = Math.floor(Math.random() * 45 + 1)
-        console.log("테스트 1");
+        
         if (!list.includes(n)) {
-          console.log("테스트 2");
+          
           list.push(n);
           i++
         } else {
@@ -49,23 +49,18 @@ function App() {
       }
       return list;
     })
-    console.log(newNumbers);
+    
     setNumbers(newNumbers)
   }
 
   // 결과 확인
-  const checkResult = (e) => {
-    console.log(numbers);
-
-    e.preventDefault();
+  const checkResult = () => {
 
     const results = numbers.map((number) => winNumber.filter((v, i) => {
       if (i !== 6) return number.includes(v)
       else return false
       
     }))
-
-    console.log(results);
 
     results.map((result, index) => {
       if (result.length === 5 && numbers[index].includes(winNumber[6])) {
@@ -88,11 +83,18 @@ function App() {
 
   // 당첨 번호 바인딩
   const handleChange = (e) => {
-    // console.log(e.target.name + e.target.value);
+    if (winNumber.includes(Number(e.target.value))) {
+      alert("중복된 숫자입니다!")
+      return
+    } 
+    // if (0 > Number(e.target.value) && 45 < Number(e.target.value)) {
+    //   alert("1 ~ 45까지의 숫자를 적어주세요!")
+    //   return
+    // }
     setWinNumber(prev => {
       const newWinNumber = [...prev];
       newWinNumber[Number(e.target.name)] = Number(e.target.value)
-      console.log(newWinNumber);
+      
       return newWinNumber;
     })
   }
