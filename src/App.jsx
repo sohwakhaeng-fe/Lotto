@@ -1,75 +1,80 @@
 import "./index.css";
+import { useState } from "react";
 import Purchase from "./components/Purchase";
 import Numbering from "./components/Numbering";
 import WinningNumber from "./components/WinningNumber";
+import ResultModal from "./components/ResultModal";
 
 function App() {
+  const [tickets, setTickets] = useState([]);
+  const [winningNumbers, setWinningNumbers] = useState([]);
+  const [bonusNumber, setBonusNumber] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const getNumbers = () => {
+    return Math.floor(Math.random() * 45) + 1;
+  };
+
+  const generateLottoNumbers = () => {
+    const randomNumbers = new Set();
+    while (randomNumbers.size < 6) {
+      randomNumbers.add(getNumbers());
+    }
+    return Array.from(randomNumbers).sort((a, b) => a - b);
+  };
+
+  const handleTickets = (ticketCount) => {
+    setTickets(Array.from({ length: ticketCount }, generateLottoNumbers));
+    handleIsModalOpen();
+  };
+
+  const handleWinningNumbers = (winningNumbers) => {
+    setWinningNumbers(winningNumbers);
+    handleIsModalOpen();
+  };
+
+  const handleBonusNumber = (bonusNumber) => {
+    setBonusNumber(bonusNumber);
+    handleIsModalOpen();
+  };
+
+  const handleIsModalOpen = () => {
+    setIsModalOpen(
+      tickets.length > 0 && winningNumbers.length > 0 && bonusNumber > 0
+    );
+  };
+
+  const isReset = winningNumbers.length === 0 && bonusNumber === 0;
+
   return (
     <div id="app" className="p-3">
       <div className="d-flex justify-center mt-5">
         <div className="w-100">
           <h1 className="text-center">🎱 행운의 로또</h1>
-          <Purchase />
-          <Numbering />
-            <WinningNumber />
+          <Purchase
+            handleTickets={handleTickets}
+            tickets={tickets}
+            isReset={isReset}
+          />
+          {tickets.length > 0 && (
+            <>
+              <Numbering tickets={tickets} />
+              <WinningNumber
+                handleWinningNumbers={handleWinningNumbers}
+                handleBonusNumber={handleBonusNumber}
+                isReset={isReset}
+              />
+            </>
+          )}
         </div>
       </div>
-
-      <div className="modal">
-        <div className="modal-inner p-10">
-          <div className="modal-close">
-            <svg viewBox="0 0 40 40">
-              <path className="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
-            </svg>
-          </div>
-
-          <h2 className="text-center">🏆 당첨 통계 🏆</h2>
-          <div className="d-flex justify-center">
-            <table className="result-table border-collapse border border-black">
-              <thead>
-                <tr className="text-center">
-                  <th className="p-3">일치 갯수</th>
-                  <th className="p-3">당첨금</th>
-                  <th className="p-3">당첨 갯수</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="text-center">
-                  <td className="p-3">3개</td>
-                  <td className="p-3">5,000</td>
-                  <td className="p-3">n개</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="p-3">4개</td>
-                  <td className="p-3">50,000</td>
-                  <td className="p-3">n개</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="p-3">5개</td>
-                  <td className="p-3">1,500,000</td>
-                  <td className="p-3">n개</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="p-3">5개 + 보너스볼</td>
-                  <td className="p-3">30,000,000</td>
-                  <td className="p-3">n개</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="p-3">6개</td>
-                  <td className="p-3">2,000,000,000</td>
-                  <td className="p-3">n개</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="text-center font-bold">당신의 총 수익률은 %입니다.</p>
-          <div className="d-flex justify-center mt-5">
-            <button type="button" className="btn btn-cyan">
-              다시 시작하기
-            </button>
-          </div>
-        </div>
-      </div>
+      {isModalOpen && (
+        <ResultModal
+          tickets={tickets}
+          winningNumbers={winningNumbers}
+          bonusNumber={bonusNumber}
+        />
+      )}
     </div>
   );
 }
